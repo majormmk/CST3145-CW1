@@ -19,12 +19,14 @@
         </header>
         <main>
             <div v-if='showLesson'>
+                    <div class="card-group">
                 <div v-for="lesson in sortedLessons">
+                    
                     <div class="card ml-5 shadow-sm mt-5 md-4" style="width:400px">
-                        <h2 v-text="lesson.title" class="card-title"></h2>
+                        <h2 v-text="lesson.title" class="card-header"></h2>
                         <div class="card-body">
                             <figure>
-                                <img class="card-img-top" v-bind:src="lesson.image">
+                                <img class="card-img-top" alt="Card image cap" v-bind:src="lesson.image">
                             </figure>
                             <p class ="card-text">Location: {{lesson.location}}</p>
                             <p class ="card-text">Price: {{lesson.price}}</p>
@@ -34,8 +36,8 @@
                     v-show='canAddToCart'>
                     Add to cart
                     </button> -->
-
-                    <button v-on:click='addToCart(lesson)' v-if='canAddToCart(lesson)'>Add to cart</button>
+                    <div class="card-footer">
+                    <button class="btn btn-primary" v-on:click='addToCart(lesson)' v-if='canAddToCart(lesson)'>Add to cart</button>
 
                     <button disabled="disabled" v-else>Add to cart</button>
 
@@ -52,6 +54,8 @@
                 </div>
                 </div>
                 </div>
+                </div>
+            </div>
             </div>
 
             <div v-else>
