@@ -26,24 +26,29 @@
                 <!-- Sorting Procedures -->
                 <div style="margin-left: 5%">
                 <p><strong>Category:</strong></p>
-                <select style="width: 90%">
-                    <option value="" disabled selected>Please select Category</option>
-                    <option value="select">Subject</option>
-                    <option value="">Location</option>
-                    <option>Price</option>
-                    
-                    <option value="">Spaces</option>
-                </select>
-                <br>
+                <p>
+                <input type="radio" name="category" id="title" value="Title" @click="sort('lesson.title')">
+                <label for="title">Subject</label>
+                <input type="radio" name="category" id="location" value="Location" @click="sort('lesson.location')">
+                <label for="location">Location</label>
+                <input type="radio" name="category" id="price" value="Price" @click="sort('lesson.price')">
+                <label for="price">Price</label>
+                <input type="radio" name="category" id="spaces" value="Spaces" @click="sort('lesson.spaces')">
+                <label for="spaces">Spaces</label>
+                </p>
                 <p><strong>Arrange:</strong></p>
-                <select style="width: 90%">
-                    <option value="">Ascending</option>
-                    <option>Descending</option>
-                </select>
+                <p>
+                    <input type="radio" id="ascending" value="ascending">
+                    <label for="ascending">Ascending</label>
+                    
+                    <input type="radio" id="descending" value="descending">
+                    <label for="descending">Descending</label>
+                </p>
                 </div>
+
                 <div class="card-group">
                 
-                    <div v-for="lesson in sortedLessonsBySpaces">
+                    <div v-for="lesson in sortLessons">
                     
                     <div class="card ml-5 shadow-sm mt-5 md-4" style="width:400px">
                         <h2 v-text="lesson.title" class="card-header"></h2>
@@ -149,6 +154,7 @@
             </div>
         </main>
     </div>
+    
 
     <script type="text/javascript">
         var webstore = new Vue({
@@ -156,8 +162,10 @@
             data: {
                 sitename: 'AFTER SCHOOL CLASSES',
                 lessons: lessons,
+                
                 cart: [],
                 showLesson: true,
+                
                 order: {
                     firstName: '',
                     lastName: '',
@@ -176,6 +184,7 @@
                     CA: 'California',
                     NV: 'Nevada'
                 },
+                sortType:'',
 
             },
             // created: function () {
@@ -205,7 +214,10 @@
                         }
                     }
                     return count;
-                }
+                },
+                sort(type) {
+                    this.sortType = type;
+                },
             },
             computed: {
                 cartItemCount() {
@@ -214,30 +226,49 @@
                 // canAddToCart(product) {
                 //     return product.availableInventory > this.cartItemCount;
                 // }
-                sortedLessonsBySpaces(){
-                    let lessonsArray = this.lessons.slice(0);
-                    function compare(a, b) {
-                        if (a.spaces < b.spaces)
-                            return 1;
-                        if (a.spaces > b.spaces)
-                            return -1;
-                        return 0;
+                // sortedLessonsBy() {
+                //     let lessonsArray = this.lessons.slice(0);
+                //     function compare(a, b) {
+                //         if (a.price > b.price)
+                //             return 1;
+                //         if (a.price < b.price)
+                //             return -1;
+                //         return 0;
+                //     }
+                //     return lessonsArray.sort(compare);
+                // }
+                sortLessons(){
+                    if(this.sortType==='') return this.lessons;
+                    if(this.sortType==='lesson.title'){
+                        return this.lessons.sort((a,b) => {
+                             if(a.title < b.title) return -1;
+                             if(a.title > b.title) return 1;
+                            return 0;
+                     });
                     }
-                    return lessonsArray.sort(compare);
+                    if(this.sortType === 'lesson.price') {
+                     return this.lessons.sort((a,b) => {
+                        if(a.price < b.price) return -1;
+                        if(a.price > b.price) return 1;
+                        return 0;
+                     });
+                    }
+                     if(this.sortType === 'lesson.location') {
+                     return this.lessons.sort((a,b) => {
+                        if(a.location < b.location) return -1;
+                        if(a.location > b.location) return 1;
+                        return 0;
+                     });
+                    }
+                    if(this.sortType === 'lesson.spaces') {
+                     return this.lessons.sort((a,b) => {
+                        if(a.spaces < b.spaces) return -1;
+                        if(a.spaces > b.spaces) return 1;
+                        return 0;
+                     });
+                    }
                 },
-                sortedLessonsByPrice() {
-                    let lessonsArray = this.lessons.slice(0);
-                    function compare(a, b) {
-                        if (a.price > b.price)
-                            return 1;
-                        if (a.price < b.price)
-                            return -1;
-                        return 0;
-                    }
-                    return lessonsArray.sort(compare);
-                }
-
-            },
+            }
         });
     </script>
 </body>
