@@ -38,10 +38,10 @@
                 </p>
                 <p><strong>Arrange:</strong></p>
                 <p>
-                    <input type="radio" id="ascending" value="ascending">
+                    <input type="radio" id="ascending" value="ascending" v-model="arrangeType">
                     <label for="ascending">Ascending</label>
                     
-                    <input type="radio" id="descending" value="descending">
+                    <input type="radio" id="descending" value="descending" v-model="arrangeType">
                     <label for="descending">Descending</label>
                 </p>
                 </div>
@@ -154,7 +154,7 @@
             </div>
         </main>
     </div>
-    
+ 
 
     <script type="text/javascript">
         var webstore = new Vue({
@@ -185,8 +185,10 @@
                     NV: 'Nevada'
                 },
                 sortType:'',
+                arrangeType:'ascending',
 
             },
+                
             // created: function () {
             //     this.products = allProducts
             // },
@@ -218,6 +220,9 @@
                 sort(type) {
                     this.sortType = type;
                 },
+                arrange(mode){
+                    this.arrangeType = mode;
+                }
             },
             computed: {
                 cartItemCount() {
@@ -238,33 +243,66 @@
                 //     return lessonsArray.sort(compare);
                 // }
                 sortLessons(){
-                    if(this.sortType==='') return this.lessons;
-                    if(this.sortType==='lesson.title'){
+                    if(this.sortType==='' ) return this.lessons;
+                    // sorting based on title
+                    if(this.sortType==='lesson.title' & this.arrangeType==='ascending'){
                         return this.lessons.sort((a,b) => {
                              if(a.title < b.title) return -1;
                              if(a.title > b.title) return 1;
                             return 0;
                      });
                     }
-                    if(this.sortType === 'lesson.price') {
+                    else if(this.sortType==='lesson.title' & this.arrangeType==='descending'){
+                        return this.lessons.sort((a,b) => {
+                             if(a.title > b.title) return -1;
+                             if(a.title < b.title) return 1;
+                            return 0;
+                     });
+                    }
+                    
+
+                    else if(this.sortType === 'lesson.price' & this.arrangeType==='ascending') {
                      return this.lessons.sort((a,b) => {
                         if(a.price < b.price) return -1;
                         if(a.price > b.price) return 1;
                         return 0;
                      });
                     }
-                     if(this.sortType === 'lesson.location') {
+
+                    else if(this.sortType==='lesson.price' & this.arrangeType==='descending'){
+                        return this.lessons.sort((a,b) => {
+                             if(a.price > b.price) return -1;
+                             if(a.price < b.price) return 1;
+                            return 0;
+                     });
+                    }
+
+                    else if(this.sortType === 'lesson.location' & this.arrangeType==='ascending') {
                      return this.lessons.sort((a,b) => {
                         if(a.location < b.location) return -1;
                         if(a.location > b.location) return 1;
                         return 0;
                      });
                     }
-                    if(this.sortType === 'lesson.spaces') {
+                    else if(this.sortType==='lesson.location' & this.arrangeType==='descending'){
+                        return this.lessons.sort((a,b) => {
+                             if(a.location > b.location) return -1;
+                             if(a.location < b.location) return 1;
+                            return 0;
+                     });
+                    }
+                    else if(this.sortType === 'lesson.spaces' & this.arrangeType==='ascending') {
                      return this.lessons.sort((a,b) => {
                         if(a.spaces < b.spaces) return -1;
                         if(a.spaces > b.spaces) return 1;
                         return 0;
+                     });
+                    }
+                    else if(this.sortType==='lesson.spaces' & this.arrangeType==='descending'){
+                        return this.lessons.sort((a,b) => {
+                             if(a.spaces > b.spaces) return -1;
+                             if(a.spaces < b.spaces) return 1;
+                            return 0;
                      });
                     }
                 },
