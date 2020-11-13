@@ -14,8 +14,12 @@
             <h1 style="text-align: center" v-text="sitename"></h1>
             <button v-on:click='showCheckout'>
                 {{cartItemCount}}
-                <span class="fas fa-cart-plus"></span> Checkout
+                <span class="fas fa-shopping-cart"></span> Checkout
             </button>
+            <!-- <button v-on:click='showShoppingCart'>
+                    {{cartItemCount}}
+                    <span class="fas fa-cart-plus"></span> Shopping Cart
+                </button> -->
         </header>
         
     
@@ -85,6 +89,11 @@
                 </div>
             </div>
             </div>
+            <!-- Shopping Cart Page -->
+            <!-- <div v-else>
+                <h2>Shopping Cart</h2>
+            </div>  -->
+            
 
             <!-- Checkout Page -->
             <div v-else>
@@ -166,6 +175,7 @@
                 cart: [],
                 showLesson: true,
                 
+                
                 order: {
                     firstName: '',
                     lastName: '',
@@ -201,7 +211,13 @@
                 showCheckout() {
                     // console.log(this.showProduct);
                     this.showLesson = this.showLesson ? false : true;
+                    
                 },
+                // showShoppingCart(){
+                //      this.showLesson = this.showLesson ? false : true;
+                // },
+                    
+                // },
                 submitForm() {
                     alert('Order submitted!')
                 },
