@@ -13,7 +13,7 @@
         <header>
             <h1 style="text-align: center" v-text="sitename"></h1>
             
-            <button v-if="cart.length>0" v-on:click='showCart'>
+            <button v-if="cart.length>0" v-on:click='showCartPage'>
                     {{cartItemCount}}
                     <span class="fas fa-cart-plus"></span> Shopping Cart
                 </button> 
@@ -91,7 +91,31 @@
                 
                 <button v-on:click="showLesson">Back to lesson</button>
                 <h2>Shopping Cart</h2>
+                <div>
+                    
+                    <div class="card-group">
                 
+                            <div v-for="lesson in cart">
+                            
+                            <div class="card ml-5 shadow-sm mt-5 md-4" style="width:400px">
+                                <h2 v-text="lesson.title" class="card-header"></h2>
+                                <div class="card-body">
+                                    <figure>
+                                        <img class="card-img-top" alt="Card image cap" v-bind:src="lesson.image">
+                                    </figure>
+                                    <p class ="card-text">Location: {{lesson.location}}</p>
+                                    <p class ="card-text">Price: ${{lesson.price}}</p>
+                                    <p class ="card-text">Quantity: {{lesson.spaces+1}}</p>
+                                    
+        
+                            <div class="card-footer">
+                            <button class="btn btn-primary" ><span class="fas fa-cart-plus"> Remove</span> </button>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
 
             <!-- Checkout Page -->
            
@@ -169,8 +193,8 @@
             data: {
                 sitename: 'AFTER SCHOOL CLASSES',
                 lessons: lessons,
-                
                 cart: [],
+                
                 show:'lesson',
                 order: {
                     firstName: '',
@@ -200,17 +224,25 @@
             // },
             methods: {
                 addToCart(lesson) {
-                    this.cart.push(lesson.id);
+                    this.cart.push(lesson);
                     lesson.spaces-1;
-                    // console.log('adding to cart', product.id)
+
+                    for(lessonObject of this.lessons){
+                        if(lesson.id==lessonObject.id){
+                            lessonObject.spaces--;
+                        }
+                    }
                 },
+
+                
                 showCheckout() {
                     console.log(this.showLesson);
                     this.showLesson = this.showLesson ? false : true;
                 },
                     
-                showCart(){
+                showCartPage(){
                     this.show = 'cart';
+                    
                 },
                 showLesson(){
                     this.show='lesson';
@@ -230,6 +262,7 @@
                     }
                     return count;
                 },
+                
                 sort(type) {
                     this.sortType = type;
                 },

@@ -41,7 +41,7 @@ let lessons = [
       "price": 300.00,
       "image": "https://pnthn.perkinelmer.com/wp-content/uploads/2020/08/Demonstration-of-Signals-Screening-512x288-1.jpg",
       "location": "Cardiff",
-      "spaces": 4,
+      "spaces": 8,
       "rating": 3
     },
     {
@@ -50,7 +50,7 @@ let lessons = [
       "price": 325.00,
       "image": "https://www.varchev.com/wp-content/uploads/2018/07/dollar-down-512x288.jpg",
       "location": "Oxford",
-      "spaces": 2,
+      "spaces": 12,
       "rating": 3
     },
     {
@@ -68,7 +68,7 @@ let lessons = [
       "price": 170.00,
       "image": "https://geography.fsu.edu/wp-content/uploads/2016/02/hurricane-floyd.jpg.adapt_.945.1-512x288.jpg",
       "location": "York",
-      "spaces": 5,
+      "spaces": 7,
       "rating": 3
     },
     {
@@ -77,7 +77,7 @@ let lessons = [
       "price": 220.00,
       "image": "https://3b99b4b1b1eeb67b6cfed986-1j19geicz9gb29oiuecu.netdna-ssl.com/wp-content/uploads/Calculator-paperwork-accountant-512x288.jpg",
       "location": "Cambridge",
-      "spaces": 7,
+      "spaces": 9,
       "rating": 3
     },
     {
@@ -86,7 +86,7 @@ let lessons = [
       "price": 180.00,
       "image": "https://media.uptopcorp.com/wp-content/uploads/2019/04/3-Examples-Business-Problems-Solved-UX-Design-512x288.jpg",
       "location": "Brighton",
-      "spaces": 7,
+      "spaces": 10,
       "rating": 3
     }
 ]
