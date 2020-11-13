@@ -12,21 +12,18 @@
     <div id="app">
         <header>
             <h1 style="text-align: center" v-text="sitename"></h1>
-            <button v-on:click='showCheckout'>
-                {{cartItemCount}}
-                <span class="fas fa-shopping-cart"></span> Checkout
-            </button>
-            <!-- <button v-on:click='showShoppingCart'>
+            
+            <button v-if="cart.length>0" v-on:click='showCart'>
                     {{cartItemCount}}
                     <span class="fas fa-cart-plus"></span> Shopping Cart
-                </button> -->
+                </button> 
         </header>
         
     
 
         <!-- Opening page -->
         <main>
-            <div v-if='showLesson'>
+            <div v-if='show=="lesson"'>
                 <!-- Sorting Procedures -->
                 <div style="margin-left: 5%">
                 <p><strong>Category:</strong></p>
@@ -90,13 +87,14 @@
             </div>
             </div>
             <!-- Shopping Cart Page -->
-            <!-- <div v-else>
+            <div v-else-if="show=='cart'">
+                
+                <button v-on:click="showLesson">Back to lesson</button>
                 <h2>Shopping Cart</h2>
-            </div>  -->
-            
+                
 
             <!-- Checkout Page -->
-            <div v-else>
+           
                 <h2>Checkout</h2>
                 <div class="card-deck">
                     <div class="card">
@@ -158,7 +156,7 @@
                 <p>Gift? {{order.gift}}</p>
                 <p>Method: {{order.method}}</p>
                 <button class="btn btn-primary" v-on:click="submitForm">Place Order</button>
-            </div>
+            
             </div>
             </div>
         </main>
@@ -173,9 +171,7 @@
                 lessons: lessons,
                 
                 cart: [],
-                showLesson: true,
-                
-                
+                show:'lesson',
                 order: {
                     firstName: '',
                     lastName: '',
@@ -205,19 +201,20 @@
             methods: {
                 addToCart(lesson) {
                     this.cart.push(lesson.id);
-                    this.lesson.spaces--;
+                    lesson.spaces-1;
                     // console.log('adding to cart', product.id)
                 },
                 showCheckout() {
-                    // console.log(this.showProduct);
+                    console.log(this.showLesson);
                     this.showLesson = this.showLesson ? false : true;
-                    
                 },
-                // showShoppingCart(){
-                //      this.showLesson = this.showLesson ? false : true;
-                // },
                     
-                // },
+                showCart(){
+                    this.show = 'cart';
+                },
+                showLesson(){
+                    this.show='lesson';
+                },
                 submitForm() {
                     alert('Order submitted!')
                 },
