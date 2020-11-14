@@ -13,7 +13,7 @@
         <header>
             <h1 style="text-align: center" v-text="sitename"></h1>
             
-            <button v-if="cart.length>0" v-on:click='showCartPage'>
+            <button class="btn btn-primary" v-if="cart.length>0" v-on:click='showCartPage'>
                     {{cartItemCount}}
                     <span class="fas fa-cart-plus"></span> Shopping Cart
                 </button> 
