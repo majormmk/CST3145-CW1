@@ -19,8 +19,6 @@
                 </button> 
         </header>
         
-    
-
         <!-- Opening page -->
         <main>
             <div v-if='show=="lesson"'>
@@ -87,37 +85,38 @@
             </div>
             </div>
             <!-- Shopping Cart Page -->
-            <div v-else-if="show=='cart'">
+            <div v-else="show=='cart'">
                 
                 <button v-on:click="showLesson">Back to lesson</button>
                 <h2>Shopping Cart</h2>
-                <div>
-                    
-                    <div class="card-group">
-                
-                            <div v-for="lesson in cart">
+                <div class="row justify-content-center" style="   border-radius: 5px;
+                width: 50%;
+                margin: 0px auto;
+                float: none;">
+                    <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th>Title</th>
+                                <th>Location</th>
+                                <th>Price</th>
+                              </tr>
+                            </thead>
                             
-                            <div class="card ml-5 shadow-sm mt-5 md-4" style="width:400px">
-                                <h2 v-text="lesson.title" class="card-header"></h2>
-                                <div class="card-body">
-                                    <figure>
-                                        <img class="card-img-top" alt="Card image cap" v-bind:src="lesson.image">
-                                    </figure>
-                                    <p class ="card-text">Location: {{lesson.location}}</p>
-                                    <p class ="card-text">Price: ${{lesson.price}}</p>
-                                    <p class ="card-text">Quantity: {{lesson.spaces+1}}</p>
-                                    
-        
-                            <div class="card-footer">
-                            <button class="btn btn-primary" ><span class="fas fa-cart-plus"> Remove</span> </button>
+                            <tbody>
+                              <tr v-for="lesson in cart">
+                                <td >{{lesson.title}}</td>
+                                <td>{{lesson.location}}</td>
+                                <td>{{lesson.price}}</td>
+                                <td><button class="btn btn-primary" v-on:click="removeLesson(lesson)"><span class="fas fa-cart-plus"> Remove</span> </button>
+                                </td>
+                              </tr>
+                            
+                            </tbody>
+                          </table>
                         </div>
-                        </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-
-            <!-- Checkout Page -->
+                
+                
+            <!-- Checkout -->
            
                 <h2>Checkout</h2>
                 <div class="card-deck">
@@ -183,6 +182,7 @@
             
             </div>
             </div>
+        </div>
         </main>
     </div>
  
@@ -219,22 +219,19 @@
 
             },
                 
-            // created: function () {
-            //     this.products = allProducts
-            // },
             methods: {
                 addToCart(lesson) {
                     this.cart.push(lesson);
                     lesson.spaces-1;
+                    lesson.quantity++;
 
                     for(lessonObject of this.lessons){
                         if(lesson.id==lessonObject.id){
                             lessonObject.spaces--;
                         }
                     }
-                },
+                }, 
 
-                
                 showCheckout() {
                     console.log(this.showLesson);
                     this.showLesson = this.showLesson ? false : true;
@@ -242,7 +239,6 @@
                     
                 showCartPage(){
                     this.show = 'cart';
-                    
                 },
                 showLesson(){
                     this.show='lesson';
@@ -262,32 +258,26 @@
                     }
                     return count;
                 },
-                
+
                 sort(type) {
                     this.sortType = type;
                 },
                 arrange(mode){
                     this.arrangeType = mode;
-                }
+                },
+                removeLesson(lesson){
+                    console.log('reachedToRemove');
+                    
+                    this.cart.splice(this.cart.indexOf(lesson), 1);
+                    lesson.spaces++;
+                },
             },
+
             computed: {
                 cartItemCount() {
                     return this.cart.length;
                 },
-                // canAddToCart(product) {
-                //     return product.availableInventory > this.cartItemCount;
-                // }
-                // sortedLessonsBy() {
-                //     let lessonsArray = this.lessons.slice(0);
-                //     function compare(a, b) {
-                //         if (a.price > b.price)
-                //             return 1;
-                //         if (a.price < b.price)
-                //             return -1;
-                //         return 0;
-                //     }
-                //     return lessonsArray.sort(compare);
-                // }
+            //    sorting the lessons
                 sortLessons(){
                     if(this.sortType==='' ) return this.lessons;
                     // sorting based on title
@@ -306,7 +296,7 @@
                      });
                     }
                     
-
+                    // sorting based on price
                     else if(this.sortType === 'lesson.price' & this.arrangeType==='ascending') {
                      return this.lessons.sort((a,b) => {
                         if(a.price < b.price) return -1;
@@ -322,7 +312,7 @@
                             return 0;
                      });
                     }
-
+                    // sorting based on location
                     else if(this.sortType === 'lesson.location' & this.arrangeType==='ascending') {
                      return this.lessons.sort((a,b) => {
                         if(a.location < b.location) return -1;
@@ -337,6 +327,7 @@
                             return 0;
                      });
                     }
+                    // sorting based on spaces
                     else if(this.sortType === 'lesson.spaces' & this.arrangeType==='ascending') {
                      return this.lessons.sort((a,b) => {
                         if(a.spaces < b.spaces) return -1;
